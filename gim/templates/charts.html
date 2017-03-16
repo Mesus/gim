@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国基科技企业数据分析与挖掘平台</title>
+    <link href="/static/dist_bt/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/dist_bt/css/highlight.css" rel="stylesheet">
+    <link href="/static/dist_bt/css/bootstrap-switch.css" rel="stylesheet">
+    <link href="/static/dist_bt/css/docs.min.css" rel="stylesheet">
+    <link href="/static/dist_bt/css/main.css" rel="stylesheet">
+    <!--<style type="text/css">-->
+    <!--body-->
+    <!--{-->
+    <!--background-image: url("/static/bg.jpg");-->
+    <!--background-color: #000000;-->
+    <!--}-->
+    <!--</style>-->
+
+</head>
+<body>
+<main id="content" role="main">
+    <div class="container">
+        <div class="row">
+            <!--<div class="col-md-5">-->
+                <!--&lt;!&ndash;<h2 class="h4">State</h2>&ndash;&gt;-->
+                <!--<br><br>-->
+                <!--<p>-->
+                    <!--&lt;!&ndash;<input id="ssa" type="checkbox" checked data-on-text="供应商" data-off-text="供应商">&ndash;&gt;-->
+                    <!--&lt;!&ndash;&nbsp;&nbsp;&ndash;&gt;-->
+                    <!--&lt;!&ndash;<input id="ssb" name="ssb" type="checkbox" data-on-text="物料名称" data-off-text="物料名称">&ndash;&gt;-->
+                    <!--&lt;!&ndash;&nbsp;&nbsp;&ndash;&gt;-->
+                    <!--&lt;!&ndash;<input id="ssc" type="checkbox" data-on-text="业务员" data-off-text="业务员">&ndash;&gt;-->
+                    <!--&lt;!&ndash;&nbsp;&nbsp;&ndash;&gt;-->
+                    <!--&lt;!&ndash;<input id="ssd" type="checkbox" data-on-text="部门" data-off-text="部门">&ndash;&gt;-->
+
+
+                <!--</p>-->
+            <!--</div>-->
+            <!--<div class="col-md-5">-->
+                <!--<br><br>-->
+                <!--<p>-->
+                    <!--&lt;!&ndash;<input id="ssb" name="ssb" type="checkbox" data-on-text="物料名称" data-off-text="物料名称">&ndash;&gt;-->
+                <!--</p>-->
+            <!--</div>-->
+            <div class="col-md-2">
+                <br><br>
+                <select class="form-control" id="yy">
+                    <option>2013</option>
+                    <option>2014</option>
+                    <option>2015</option>
+                </select>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <button class="btn btn-info">折线图</button>
+                <button class="btn btn-info">曲线图</button>
+                <button class="btn btn-info">饼型图</button>
+                <button class="btn btn-info">面积图</button>
+                <button class="btn btn-info">柱形图</button>
+                <button class="btn btn-info">曲线面积图</button>
+                <button class="btn btn-info">条形图</button>
+                <button class="btn btn-info">散点图</button>
+            </div>
+        </div>
+    </div>
+</main>
+<br><br>
+<div id="container" style="width:100%; height:850px;"></div>
+<!-- Modal -->
+<div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" style="width:85%;">
+    <div class="modal-content div-mk">
+      <div class="modal-body">
+        <div class="page-modal-mk" id="container2" style="width:80%;" align="center"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button"  class="btn btn-primary" data-dismiss="modal">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
+<input type="hidden" id="ti">
+<input type="hidden" id="wi" value="{{yyy}}">
+<script src="/static/dist_bt/js/jquery.min.js"></script>
+<script src="/static/dist_bt/js/bootstrap.min.js"></script>
+<script src="/static/dist_bt/js/highlight.js"></script>
+<script src="/static/dist_bt/js/bootstrap-switch.js"></script>
+<script src="/static/dist_bt/js/main.js"></script>
+<script src="/static/dist_bt/js/highcharts.js"></script>
+<!--<script src="http://code.highcharts.com/themes/sand-signika.js"></script>-->
+<script src="http://img.hcharts.cn/highcharts/themes/dark-unica.js"></script>
+<script>
+    $(function() {
+      $('#ssa').on('switchChange.bootstrapSwitch', function () {
+          s = $('#ssa').bootstrapSwitch('state');
+          if(s){
+            $('#ssb').bootstrapSwitch('state', "", false);
+            $('#ssc').bootstrapSwitch('state', "", false);
+            $('#ssd').bootstrapSwitch('state', "", false);
+          }
+      });
+      $('#ssb').on('switchChange.bootstrapSwitch', function () {
+          s = $('#ssb').bootstrapSwitch('state');
+          if(s){
+            $('#ssa').bootstrapSwitch('state', "", false);
+            $('#ssc').bootstrapSwitch('state', "", false);
+            $('#ssd').bootstrapSwitch('state', "", false);
+          }
+      });
+      $('#ssc').on('switchChange.bootstrapSwitch', function () {
+          s = $('#ssc').bootstrapSwitch('state');
+          if(s){
+            $('#ssa').bootstrapSwitch('state', "", false);
+            $('#ssb').bootstrapSwitch('state', "", false);
+            $('#ssd').bootstrapSwitch('state', "", false);
+          }
+      });
+      $('#ssd').on('switchChange.bootstrapSwitch', function () {
+          s = $('#ssd').bootstrapSwitch('state');
+          if(s){
+            $('#ssa').bootstrapSwitch('state', "", false);
+            $('#ssb').bootstrapSwitch('state', "", false);
+            $('#ssc').bootstrapSwitch('state', "", false);
+          }
+      });
+
+
+    });
+
+
+
+</script>
+<script type="text/javascript">
+    function c2t(cnn){
+        if(cnn == "折线图"){
+           return "line"
+        }
+        if(cnn == "曲线图"){
+           return "spline"
+        }
+        if(cnn == "饼型图"){
+           return "pie"
+        }
+        if(cnn == "面积图"){
+           return "area"
+        }
+        if(cnn == "柱形图"){
+           return "column"
+        }
+        if(cnn == "曲线面积图"){
+           return "areaspline"
+        }
+        if(cnn == "条形图"){
+           return "bar"
+        }
+        if(cnn == "散点图"){
+           return "scatter"
+        }
+
+    }
+    $(document).keydown(function(event){
+        if(event.keyCode == 39){
+            location.href = "/map";
+        }
+    });
+            var options = {
+                    chart:{
+                        renderTo:'container',
+                        plotBackgroundColor:null,
+                        plotBorderWidth:null,
+                        plotShadow:false,
+                        events:{
+                            load:function(){
+
+                            }
+                        }
+                    },
+                    xAxis: {
+                        categories: ['一月', '二月', '三月', '四月', '五月', '六月',
+                                        '七月', '八月', '九月', '十月', '十一月', '十二月']
+                    },
+                    credits:{
+                        enabled:true,
+                        href:'http://www.bnc.com.cn',
+                        text:'BNC'
+                    },
+                    title:{
+                        text:'<b>{{yyy}}年供应商金额分布</b>'
+                    },
+                    tooltip:{
+                        pointFormat:'{series.name}:<b>{point.y}</b>'
+                    },
+                    series:[{
+                        name:'供应商供应金额',
+                        data:[
+                            {{sss|safe}}
+                            ],
+                        events: {
+					        click: function(event) {
+					            var m = event.point.x;
+					            var g = event.point.name;
+					            var checkText=$("#yy").find("option:selected").text();
+                                $.get("/sub_charts/",{'y':checkText,'m':m,'g':g}, function(ret){
+                                    console.log(ret);
+                                    var ol_arr = ret.split("|");
+                                    options1.chart.renderTo = "container2";
+                                    var cate = ol_arr[0].split(",");
+                                    <!--cate.push("01-14");-->
+                                    var tl_arr = ol_arr[1].split(";");
+                                    var da = new Array();
+                                    for (i in tl_arr){
+                                        var tmp = tl_arr[i].split(",");
+                                        console.log(tmp);
+                                        var nn = new Array();
+                                        nn.push(tmp[0]);
+                                        nn.push(parseFloat(tmp[1]));
+                                        da.push(nn);
+                                    }
+                                    options1.xAxis.categories=cate;
+                                    console.log(da);
+                                    options1.series[0].name = "物料金额";
+                                    options1.series[0].data = da;
+                                    var type = $("#ti").val();
+                                    console.log(type);
+                                    options1.chart.type = type;
+                                    chart = new Highcharts.Chart(options1);
+                                    $('#myModal').modal();
+                                });
+					        }
+					    }
+                    }]
+            };
+            var chart;
+
+            $(document).ready(function(){
+                var wi = $("#wi").val();
+                console.log("xxxx"+wi);
+                $("#yy").val(wi);
+                chart = new Highcharts.Chart(options);
+                $(".btn.btn-info").click(function(){
+                    var type = $(this).html();
+                    type = c2t(type);
+                    console.log(type);
+                    $("#ti").val(type);
+                    if(type=="pie"){
+                        options.tooltip.pointFormat = '{series.name}:<b>{point.percentage:.lf}%</b>';
+                    }else{
+                        options.tooltip.pointFormat = '{series.name}:<b>{point.y}</b>';
+                    }
+                    var checkText=$("#yy").find("option:selected").text();
+                    options.title.text = '<b>'+checkText+'</b>';
+                    options.chart.type = type;
+                    options.chart.renderTo = "container";
+                    chart = new Highcharts.Chart(options);
+                });
+
+            $("#yy").change(function(){
+                    var checkText=$("#yy").find("option:selected").text();
+                    location.href = "/charts?year="+checkText;
+                    <!--$.get("/charts/",{'year':checkText}, function(ret){-->
+                        <!--console.log("ret");-->
+                    <!--});-->
+                    <!--var type = $("#ti").val();-->
+                    <!--console.log(type);-->
+                    <!--options.title.text = '<b>'+checkText+'</b>';-->
+                    <!--options.chart.type = type;-->
+                    <!--chart = new Highcharts.Chart(options);-->
+            });
+            });
+
+            var options1 = {
+                    chart:{
+                        renderTo:'container',
+                        plotBackgroundColor:null,
+                        plotBorderWidth:null,
+                        plotShadow:false,
+                        events:{
+                            load:function(){
+
+                            }
+                        }
+                    },
+                    xAxis: {
+                        categories: []
+                    },
+                    credits:{
+                        enabled:true,
+                        href:'http://www.bnc.com.cn',
+                        text:'BNC'
+                    },
+                    title:{
+                        text:'<b>{{yyy}}年供应商金额分布</b>'
+                    },
+                    tooltip:{
+                        pointFormat:'{series.name}:<b>{point.y}</b>'
+                    },
+                    series:[{
+                        name:'供应商供应金额',
+                        data:[
+
+                            ]
+
+                    }]
+            };
+
+</script>
+</body>
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国基科技企业数据分析与挖掘平台</title>
+    <link href="/static/dist_bt/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/dist_bt/css/highlight.css" rel="stylesheet">
+    <link href="/static/dist_bt/css/bootstrap-switch.css" rel="stylesheet">
+    <link href="/static/dist_bt/css/docs.min.css" rel="stylesheet">
+    <link href="/static/dist_bt/css/main.css" rel="stylesheet">
+    <style type="text/css">
+    body
+    {
+    <!--background-image: url("/static/bg.jpg");-->
+    background-color: #FFFFFF;
+    }
+	div.polaroid {
+	  width: 360px;
+	  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(255, 255, 255, 0.19);
+	  text-align: center;
+	}
+
+	div.c1 {
+	  padding: 10px;
+	}
+	</style>
+</head>
+<body>
+<!-- Modal -->
+<div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" style="width:100%;">
+    <div class="modal-content div-mk">
+      <div class="modal-body">
+        <div class="page-modal-mk" id="c2" style="width:100%;" align="center"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div id="container" style="width:100%; height:100%;"></div>
+<div id="cc" style="width:100%; height:100%;"></div>
+<input type="hidden" id="ti">
+<input type="hidden" id="wi" value="{{yyy}}">
+<script src="/static/dist_bt/js/jquery.min.js"></script>
+<script src="/static/dist_bt/js/bootstrap.min.js"></script>
+<script src="/static/dist_bt/js/highlight.js"></script>
+<script src="/static/dist_bt/js/bootstrap-switch.js"></script>
+<script src="/static/dist_bt/js/main.js"></script>
+<script src="/static/dist_bt/js/highcharts.js"></script>
+<script src="http://img.hcharts.cn/highcharts/themes/dark-unica.js"></script>
+
+<script type="text/javascript">
+            var options = {
+                    chart:{
+                        renderTo:'container',
+                        plotBackgroundColor:null,
+                        plotBorderWidth:null,
+                        plotShadow:false,
+                        events:{
+                            load:function(){
+
+                            }
+                        }
+                    },
+                    xAxis: {
+                        categories: [{{categ|safe}}]
+                    },
+                    credits:{
+                        enabled:true,
+                        href:'http://www.bnc.com.cn',
+                        text:'BNC'
+                    },
+                    title:{
+                        text:'<b>验收标准</b>'
+                    },
+                    tooltip:{
+                        pointFormat:'{series.name}:<b>{point.y}</b>'
+                    },
+                    series:[{
+                        name:'验收标准',
+                        data:[
+                            {{sss|safe}}
+                            ],
+                        events: {
+					        click: function(event) {
+					            var g = event.point.name;
+					            console.log(g);
+
+					            $.get("/ayb/",{'t':'avg'}, function(ret){
+					                var ol_arr = ret.split("|");
+					                var cate = ol_arr[0].split(",");
+					                var x = new Array();
+					                for (i in cate){
+					                    console.log(cate[i]);
+					                    x.push(cate[i]);
+					                }
+                                    op1.xAxis.categories=x;
+                                    var d = new Array();
+                                    var da = ol_arr[1].split(",");
+                                    for (j in da){
+					                    d.push(parseInt(da[j]));
+					                }
+                                    op1.series[0].data = d;
+                                    op1.title.text = '<b>' + g + '</b>验收效果分布'
+                                    chart1 = new Highcharts.Chart(op1);
+                                    <!--$('#myModal').modal();-->
+                                    window.scrollTo(0,document.body.scrollHeight);
+					            });
+					        }
+					    }
+                    }]
+            };
+            var chart;
+            var op1 = {
+                    chart:{
+                        renderTo:'cc',
+                        plotBackgroundColor:null,
+                        plotBorderWidth:null,
+                        plotShadow:false,
+                        events:{
+                            load:function(){
+
+                            }
+                        }
+                    },
+                    xAxis: {
+                        categories: [{{downCate|safe}}]
+                        <!--labels: {-->
+                            <!--rotation: -45,-->
+                            <!--style: {-->
+                                <!--fontSize: '13px',-->
+                                <!--fontFamily: 'Verdana, sans-serif'-->
+                            <!--}-->
+                        <!--}-->
+                    },
+                    yAxis: {
+                        title: {
+                            text: '平均时间(ms)'
+                        },
+                        plotLines: [{
+                            value: 0,
+                            width: 1,
+                            color: '#808080'
+                        }]
+                    },
+                    credits:{
+                        enabled:true,
+                        href:'http://www.bnc.com.cn',
+                        text:'BNC'
+                    },
+                    title:{
+                        text:'<b>验收效果分布</b>'
+                    },
+                    tooltip:{
+                        pointFormat:'{series.name}:<b>{point.y}</b>ms'
+                    },
+                    series:[{
+                        type: 'scatter',
+                        colorByPoint: true,
+                        name:'{{eff}}',
+                        showInLegend: false,
+                        data:[
+                            {{downData|safe}}
+                            ]
+                    }]
+            };
+            $(document).ready(function(){
+                <!--var wi = $("#wi").val();-->
+                <!--console.log("xxxx"+wi);-->
+                <!--$("#yy").val(wi);-->
+                options.chart.type = "pie";
+                chart = new Highcharts.Chart(options);
+                chart1 = new Highcharts.Chart(op1);
+            $("#yy").change(function(){
+                    <!--var checkText=$("#yy").find("option:selected").text();-->
+                    <!--location.href = "/cr?year="+checkText;-->
+                    <!--$.get("/charts/",{'year':checkText}, function(ret){-->
+                        <!--console.log("ret");-->
+                    <!--});-->
+                    <!--var type = $("#ti").val();-->
+                    <!--console.log(type);-->
+                    <!--options.title.text = '<b>'+checkText+'</b>';-->
+                    <!--options.chart.type = type;-->
+                    <!--chart = new Highcharts.Chart(options);-->
+            });
+            });
+
+            var options1 = {
+                    chart:{
+                        renderTo:'c1',
+                        plotBackgroundColor:null,
+                        plotBorderWidth:null,
+                        plotShadow:false,
+                        events:{
+                            load:function(){
+
+                            }
+                        }
+                    },
+                    xAxis: {
+                        categories: []
+                    },
+                    credits:{
+                        enabled:true,
+                        href:'http://www.bnc.com.cn',
+                        text:'BNC'
+                    },
+                    title:{
+                        text:'<b>{{yyy}}年度供应商TOP5</b>'
+                    },
+                    tooltip:{
+                        pointFormat:'{series.name}:<b>{point.y}</b>'
+                    },
+                    series:[{
+                        name:'供应商供应金额',
+                        data:[
+
+                            ]
+
+                    }]
+            };
+
+</script>
+</body>
+</html>

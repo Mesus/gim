@@ -1,0 +1,1 @@
+$(function() {Morris.Bar({element: 'ghpd',data: [{y:'中发电子市场',a:1835},{y:'北京元坤伟业科技有限公司',a:572},{y:'北京天一天华科技有限公司',a:565},{y:'北京雅斯创兴科技发展有限公司',a:529},{y:'北京金柏格信息科技有限公司',a:443}],xkey: 'y',ykeys: ['a'],labels: ['供货总数'],hideHover: 'auto',resize: true});});

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<style type="text/css">
+		body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+	</style>
+	<script src="/static/dist_bt/js/jquery.min.js"></script>
+	<script src="/static/dist_bt/js/bootstrap.min.js"></script>
+	<!--<link href="/static/dist_bt/css/bootstrap.min.css" rel="stylesheet">-->
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=O7Fm6UsG5VbbQkQPohAzxpp1XCzrbMse"></script>
+	<title>国基科技企业数据分析与挖掘平台</title>
+</head>
+<body>
+	<div id="allmap"></div>
+	<!--<div id="r-result">-->
+		<!--<input type="button" onclick="add_control();" value="添加" />-->
+	<!--</div>-->
+<a class="btn default" href="/ysxg" data-target="#ajax" data-toggle="modal" id="cm">click</a>
+<div class="modal fade" id="ajax" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:60%;">
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+	// 百度地图API功能
+	var map = new BMap.Map("allmap");
+	var point = new BMap.Point(1.32,47.13);
+	map.centerAndZoom(point, 4);
+	map.enableScrollWheelZoom();
+	var menu = new BMap.ContextMenu();
+	var txtMenuItem = [
+		{
+			text:'返回导航页',
+			callback:function(){window.parent.location.href='/nav';}
+		},
+		{
+			text:'验收效果',
+			<!--callback:function(){$("#cm").click();}-->
+			callback:function(){window.open("/ysxg", "弹出窗口", "width=860px, height=400px,top=100px,left=100px,toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no,alwaysRaised=yes,depended=yes");}
+		}
+	];
+	for(var i=0; i < txtMenuItem.length; i++){
+		menu.addItem(new BMap.MenuItem(txtMenuItem[i].text,txtMenuItem[i].callback,100));
+	}
+	map.addContextMenu(menu);
+	<!--var top_left_control = new BMap.ScaleControl({anchor: BMAP_ANCHOR_TOP_LEFT});// 左上角，添加比例尺-->
+
+	var data_info = [{{fill|safe}}];
+	var opts = {
+				width : 200,     // 信息窗口宽度
+				height: 240,     // 信息窗口高度
+				title : "" , // 信息窗口标题
+				enableMessage:true//设置允许信息窗发送短息
+			   };
+	for(var i=0;i<data_info.length;i++){
+		var marker = new BMap.Marker(new BMap.Point(data_info[i][0],data_info[i][1]));  // 创建标注
+		var content = data_info[i][2];
+		map.addOverlay(marker);               // 将标注添加到地图中
+		marker.enableDragging();
+		addClickHandler(content,marker);
+	}
+	function addClickHandler(content,marker){
+		marker.addEventListener("click",function(e){
+			openInfo(content,e)}
+		);
+	}
+	function openInfo(content,e){
+		var p = e.target;
+		var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+		var infoWindow = new BMap.InfoWindow(content,opts);  // 创建信息窗口对象
+		map.openInfoWindow(infoWindow,point); //开启信息窗口
+	}
+
+	function add_control(){
+		map.addControl(top_left_control);
+	}
+</script>

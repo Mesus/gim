@@ -1,0 +1,213 @@
+<html>
+<head>
+<title>国基科技企业数据分析与挖掘平台</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- Save for Web Styles (bnc.psd) -->
+	<link href="/static/dist_bt/css/bootstrap.min.css" rel="stylesheet">
+	<script src="/static/dist_bt/js/jquery.min.js"></script>
+	<script src="/static/dist_bt/js/bootstrap.min.js"></script>
+<style type="text/css">
+<!--
+
+#__01 {
+	position:absolute;
+	left:0px;
+	top:0px;
+	width:1360px;
+	height:701px;
+}
+
+#bnc-01 {
+	position:absolute;
+	left:0px;
+	top:0px;
+	width:459px;
+	height:488px;
+}
+
+#bnc-02 {
+	position:absolute;
+	left:459px;
+	top:0px;
+	width:901px;
+	height:701px;
+}
+
+#bnc-03 {
+	position:absolute;
+	left:0px;
+	top:488px;
+	width:459px;
+	height:8px;
+}
+
+#bnc-04 {
+	position:absolute;
+	left:0px;
+	top:496px;
+	width:172px;
+	height:205px;
+}
+
+#bnc-05 {
+	position:absolute;
+	left:172px;
+	top:496px;
+	width:194px;
+	height:19px;
+}
+
+#bnc-06 {
+	position:absolute;
+	left:366px;
+	top:496px;
+	width:93px;
+	height:84px;
+}
+
+#bnc-07 {
+	position:absolute;
+	left:172px;
+	top:515px;
+	width:194px;
+	height:27px;
+}
+
+#bnc-08 {
+	position:absolute;
+	left:172px;
+	top:542px;
+	width:193px;
+	height:17px;
+}
+
+#bnc-09 {
+	position:absolute;
+	left:365px;
+	top:542px;
+	width:1px;
+	height:38px;
+}
+
+#bnc-10 {
+	position:absolute;
+	left:172px;
+	top:559px;
+	width:193px;
+	height:21px;
+}
+
+#bnc-11 {
+	position:absolute;
+	left:172px;
+	top:580px;
+	width:87px;
+	height:121px;
+}
+
+#bnc-12 {
+	position:absolute;
+	left:259px;
+	top:580px;
+	width:111px;
+	height:26px;
+}
+
+#bnc-13 {
+	position:absolute;
+	left:370px;
+	top:580px;
+	width:89px;
+	height:121px;
+}
+
+#bnc-14 {
+	position:absolute;
+	left:259px;
+	top:606px;
+	width:111px;
+	height:95px;
+}
+	#__01 {
+	  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	}
+-->
+</style>
+<!-- End Save for Web Styles -->
+	<script>
+		$(document).ready(function(){
+		 $("username").focus();
+		})
+		setTimeout( function(){
+  			try{
+				$("username").focus();
+				$("username").select();
+  			} catch(e){}
+		}, 200);
+		$(function() {
+			$(document).keydown(function(e){
+   	 			if(e.keyCode == 13){
+   	 				$('form').submit();
+    			}
+			});
+			$("#bnc-12").click(function(){
+				$('form').submit();
+			});
+		});
+	</script>
+</head>
+<body style="background-color:#FFFFFF; margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px;">
+<!-- Save for Web Slices (bnc.psd) -->
+<form action="/login" method="post">{% csrf_token %}
+{{error|safe}}
+<div id="__01" style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px;z-index:-1">
+	<div id="bnc-01">
+		<img src="static/images/bnc_01.jpg" width="459" height="488" alt="">
+	</div>
+	<div id="bnc-02">
+		<img src="static/images/bnc_02.jpg" width="901" height="701" alt="">
+	</div>
+	<div id="bnc-03">
+		<img src="static/images/bnc_03.jpg" width="459" height="8" alt="">
+	</div>
+	<div id="bnc-04">
+		<img src="static/images/bnc_04.jpg" width="172" height="205" alt="">
+	</div>
+	<div id="bnc-05">
+		<input type="text" name="username" style="outline:none;width:198px;height:19px;border:0px;background-color:transparent;BACKGROUND-IMAGE: url(/static/images/bnc_05.jpg); BACKGROUND-REPEAT: no-repeat">
+		<img src="static/images/bnc_05.jpg" width="194" height="19" alt="">
+	</div>
+	<div id="bnc-06">
+		<img src="static/images/bnc_06.jpg" width="93" height="84" alt="">
+	</div>
+	<div id="bnc-07">
+		<img src="static/images/bnc_07.jpg" width="194" height="27" alt="">
+	</div>
+	<div id="bnc-08">
+		<input type="password" name="password" style="outline:none;width:198px;height:17px;border:0px;background-color:transparent;BACKGROUND-IMAGE: url(/static/images/bnc_08.jpg); BACKGROUND-REPEAT: no-repeat">
+		<img src="static/images/bnc_08.jpg" width="193" height="17" alt="">
+	</div>
+	<div id="bnc-09">
+		<img src="static/images/bnc_09.jpg" width="1" height="38" alt="">
+	</div>
+	<div id="bnc-10">
+		<img src="static/images/bnc_10.jpg" width="193" height="21" alt="">
+	</div>
+	<div id="bnc-11">
+		<img src="static/images/bnc_11.jpg" width="87" height="121" alt="">
+	</div>
+	<div id="bnc-12">
+		<img src="static/images/bnc_12.jpg" width="111" height="26" alt="">
+	</div>
+	<div id="bnc-13">
+		<img src="static/images/bnc_13.jpg" width="89" height="121" alt="">
+	</div>
+	<div id="bnc-14">
+		<img src="static/images/bnc_14.jpg" width="111" height="95" alt="">
+	</div>
+
+</div>
+<!-- End Save for Web Slices -->
+</form>
+</body>
+</html>

@@ -1,0 +1,9 @@
+find . -name "*.js" | xargs grep "morris-area-chart"
+218.241.170.181
+select count(gys),gys from gim_erp_data group by 2 order by 1 desc limit 0,10
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" ""> <html> <head> <title>Map with valid credentials</title> <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> <script type="text/javascript" src="?v=7.0&mkt=zh-cn"></script> <script type="text/javascript"> var map = null; function getMap() { map = new Microsoft.Maps.Map(document.getElementById('myMap'), { credentials: 'your credentials', zoom: 3}); //这里修改为你的密码 Microsoft.Maps.Events.addHandler(map, 'click', displayInfo); } function displayInfo(e){ //若点击到地图的标记上，，而非地图上 var loc; if (e.targetType == "pushpin") { loc = e.target.getLocation(); } //若点击到地图上 else { var point = new Microsoft.Maps.Point(e.pageX, e.pageY); loc = e.target.tryPixelToLocation(point, Microsoft.Maps.PixelReference.page); } alert(loc.latitude+", "+loc.longitude); } </script> </head> <body onload="getMap();"> <div id='myMap' style="width:100%; height:100%;"></div> </body> </html>
+
+python -m compileall dictory
+2.remove source code
+find -name "*.py" -exec rm -f {} \;

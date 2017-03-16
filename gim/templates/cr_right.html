@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国基科技企业数据分析与挖掘平台</title>
+    <link href="/static/dist_bt/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/dist_bt/css/highlight.css" rel="stylesheet">
+    <link href="/static/dist_bt/css/bootstrap-switch.css" rel="stylesheet">
+    <link href="/static/dist_bt/css/docs.min.css" rel="stylesheet">
+    <link href="/static/dist_bt/css/main.css" rel="stylesheet">
+    <style type="text/css">
+    body
+    {
+    background-image: url("/static/bg.jpg");
+    background-color: #000000;
+    }
+	div.polaroid {
+	  width: 360px;
+	  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(255, 255, 255, 0.19);
+	  text-align: center;
+	}
+
+	div.c1 {
+	  padding: 10px;
+	}
+	</style>
+</head>
+<body>
+
+<div class="alert alert-info" style="width:99%; height:99%;"><b>{{ystart|safe}}</b>-<b>{{yend}}</b>年度工程数量：{{peoplenum}}</div>
+<div id="container" style="width:96%; height:96%;"></div>
+<select class="form-control" id="ys">{{sel_y|safe}}</select>
+<div class="alert alert-info" style="width:98; height:98%;">工程地域：<b id="gcdy">{{cs}}</b></div>
+<div id="c1" style="width:96%; height:96%;"></div>
+<input type="hidden" id="ti">
+<input type="hidden" id="wi" value="{{yyy}}">
+<script src="/static/dist_bt/js/jquery.min.js"></script>
+<script src="/static/dist_bt/js/bootstrap.min.js"></script>
+<script src="/static/dist_bt/js/highlight.js"></script>
+<script src="/static/dist_bt/js/bootstrap-switch.js"></script>
+<script src="/static/dist_bt/js/main.js"></script>
+<script src="/static/dist_bt/js/highcharts.js"></script>
+<script src="http://img.hcharts.cn/highcharts/themes/dark-unica.js"></script>
+
+<script type="text/javascript">
+            var options = {
+                    chart:{
+                        renderTo:'container',
+                        plotBackgroundColor:null,
+                        plotBorderWidth:null,
+                        plotShadow:false,
+                        events:{
+                            load:function(){
+
+                            }
+                        }
+                    },
+                    xAxis: {
+                        categories: [{{categ|safe}}]
+                    },
+                    credits:{
+                        enabled:true,
+                        href:'http://www.bnc.com.cn',
+                        text:'BNC'
+                    },
+                    title:{
+                        text:'<b>工程时间分布</b>'
+                    },
+                    tooltip:{
+                        pointFormat:'{series.name}:<b>{point.y}</b>'
+                    },
+                    series:[{
+                        name:'工程数',
+                        data:[
+                            {{sss|safe}}
+                            ],
+                        events: {
+					        click: function(event) {
+					            var g = event.point.name;
+					            $.get("/ap4s/",{'p':g}, function(ret){
+					                var ol_arr = ret.split("|");
+					                var cate = ol_arr[0].split(",");
+					                var x = new Array();
+					                for (i in cate){
+					                    console.log(cate[i]);
+					                    x.push(cate[i]);
+					                }
+                                    op1.xAxis.categories=x;
+                                    var d = new Array();
+                                    var da = ol_arr[1].split(",");
+                                    for (j in da){
+					                    d.push(parseInt(da[j]));
+					                }
+                                    op1.series[0].data = d;
+                                    chart1 = new Highcharts.Chart(op1);
+					            });
+					        }
+					    }
+                    }]
+            };
+            var chart;
+            var op1 = {
+                    chart:{
+                        renderTo:'c1',
+                        plotBackgroundColor:null,
+                        plotBorderWidth:null,
+                        plotShadow:false,
+                        events:{
+                            load:function(){
+
+                            }
+                        }
+                    },
+                    xAxis: {
+                        categories: [{{downCate|safe}}]
+                    },
+                    credits:{
+                        enabled:true,
+                        href:'http://www.bnc.com.cn',
+                        text:'BNC'
+                    },
+                    title:{
+                        text:'{{ott|safe}}'
+                    },
+                    tooltip:{
+                        pointFormat:'{series.name}:<b>{point.y}</b>'
+                    },
+                    series:[{
+                        type: 'column',
+                        colorByPoint: true,
+                        name:'施工地区',
+                        showInLegend: false,
+                        data:[
+                            {{downData|safe}}
+                            ]
+                    }]
+            };
+            $(document).ready(function(){
+                <!--var wi = $("#wi").val();-->
+                <!--console.log("xxxx"+wi);-->
+                <!--$("#yy").val(wi);-->
+                options.chart.type = "areaspline";
+                chart = new Highcharts.Chart(options);
+                chart1 = new Highcharts.Chart(op1);
+            $("#ys").change(function(){
+                    var checkText=$("#ys").find("option:selected").text();
+                    $.get("/ap4y/",{'y':checkText}, function(ret){
+                                    window.parent.frames["map"].src = "/bmcr?year="+checkText;
+					                var ol_arr = ret.split("|");
+					                var cate = ol_arr[0].split(",");
+					                var x = new Array();
+					                for (i in cate){
+					                    console.log(cate[i]);
+					                    x.push(cate[i]);
+					                }
+                                    op1.xAxis.categories=x;
+                                    var d = new Array();
+                                    var da = ol_arr[1].split(",");
+                                    for (j in da){
+					                    d.push(parseInt(da[j]));
+					                }
+                                    op1.series[0].data = d;
+                                    op1.title.text = checkText + "施工地域";
+                                    $("#gcdy").html(ol_arr[2]);
+                                    chart1 = new Highcharts.Chart(op1);
+					});
+            });
+            });
+
+            var options1 = {
+                    chart:{
+                        renderTo:'c1',
+                        plotBackgroundColor:null,
+                        plotBorderWidth:null,
+                        plotShadow:false,
+                        events:{
+                            load:function(){
+
+                            }
+                        }
+                    },
+                    xAxis: {
+                        categories: []
+                    },
+                    credits:{
+                        enabled:true,
+                        href:'http://www.bnc.com.cn',
+                        text:'BNC'
+                    },
+                    title:{
+                        text:'<b>{{yyy}}年度供应商TOP5</b>'
+                    },
+                    tooltip:{
+                        pointFormat:'{series.name}:<b>{point.y}</b>'
+                    },
+                    series:[{
+                        name:'供应商供应金额',
+                        data:[
+
+                            ]
+
+                    }]
+            };
+
+</script>
+</body>
+</html>

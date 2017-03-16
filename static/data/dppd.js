@@ -1,0 +1,1 @@
+$(function() {Morris.Bar({element: 'dppd',data: [{y:'交换机',a:233},{y:'摄像机',a:71},{y:'硬盘',a:62},{y:'设备箱',a:51},{y:'服务器',a:49},{y:'RW POE供电单元 AC 1000M（通用）',a:45},{y:'球机',a:45},{y:'贴片电阻/0R/5%',a:45},{y:'贴片电阻/4.7K/5%',a:42},{y:'硬盘录像机',a:40}],xkey: 'y',ykeys: ['a'],labels: ['单品数量'],hideHover: 'auto',resize: true});});

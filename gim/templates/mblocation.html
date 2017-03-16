@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>国基科技企业数据分析与挖掘平台</title>
+    <script type="text/javascript" src="http://union.mapbar.com/apis/maps/free?f=mapi&v=31.3&k=aCW9cItqL7sqT7AxaB0zdHZoZSWmbBsuT7JhMHTsMeD6ZIl9NzFsZHT=@JBL979@Iu7lJJZWWq0IDu9xZMzMxq7I9AhH7LAAA6hqzZHZZLTbZZauxlDz7C7DD9ZCFGT="></script>
+    <script type="text/javascript">
+//        document.getElementById("mapbar").style.width=document.body.scrollWidth;
+//        document.getElementById("mapbar").style.height=document.body.scrollHeight;
+        var maplet = null;
+        function initMap(){
+            maplet = new Maplet("mapbar");
+            maplet.showOverview(false, false);
+            maplet.centerAndZoom(new MPoint(116.41294,39.92328), 4);
+            maplet.addControl(new MStandardControl());
+            myInterval();
+//            setInterval("myInterval()",35000);
+
+        }
+        function myInterval(){
+//            setTimeout("fone()",1000);
+//            setTimeout("ftwo()",2000);
+            {{interval|safe}}
+        }
+        {{sfun|safe}}
+//        function fone(){
+//            var marker = new MMarker(
+//                    new MPoint(126.68848,45.58553),
+//                    new MIcon("1.png", 34, 34),
+//                    new MInfoWindow("天安门", "信息窗口内容")
+////                    new MLabel("标签")
+//
+//            );
+//
+//            maplet.addOverlay(marker);
+//            marker.openInfoWindow();
+//        }
+//        function ftwo(){
+//            var marker = new MMarker(
+//                    new MPoint(91.61469,29.56807),
+//                    new MIcon("/static/1.png", 34, 34),
+//                    new MInfoWindow("植物园", "信息窗口内容")
+////                    new MLabel("标签")
+//            );
+//            maplet.setIwStdSize(200,100);
+//            maplet.addOverlay(marker);
+//            marker.openInfoWindow();
+//        }
+    </script>
+</head>
+
+<body onload="initMap()">
+<div id="mapbar" style="width:1024px; height:768px;"></div>
+<script type="text/javascript">
+    //让地图全屏显示
+    document.getElementById("mapbar").style.height=window.screen.availHeight+"px";
+    document.getElementById("mapbar").style.width=window.screen.availWidth+"px";
+    $(document).keydown(function(event){
+    alert(event.keyCode);
+    });
+</script>
+</body>
+</html>
